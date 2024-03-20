@@ -14,6 +14,12 @@ export default function Table() {
 		initialData: students,
 	});
 
+	useEffect(() => {
+		if (data) {
+			setStudentList(data);
+		}
+	}, [data]);
+
 	if (isPending) {
 		return <span>Loading...</span>;
 	}
@@ -22,23 +28,25 @@ export default function Table() {
 		return <span>Error: {error.message}</span>;
 	}
 
-	useEffect(() => {
-		if (data) {
-			setStudentList(data);
-		}
-	}, [data]);
-
 	return (
-		<table 
-			className='border-spacing-0 w-3xl'
-		>
+		<table className='border-spacing-0 w-3xl'>
 			<thead>
 				<tr>
-					<th className='p-1.5 text-start border-b-slate-300 border-b text-ellipsis overflow-hidden whitespace-nowrap'>ID</th>
-					<th className='p-1.5 text-start border-b-slate-300 border-b text-ellipsis overflow-hidden whitespace-nowrap'>First name</th>
-					<th className='p-1.5 text-start border-b-slate-300 border-b text-ellipsis overflow-hidden whitespace-nowrap'>Last name</th>
-					<th className='p-1.5 text-start border-b-slate-300 border-b text-ellipsis overflow-hidden whitespace-nowrap'>Registration</th>
-					<th className='p-1.5 text-center border-b-slate-300 border-b text-ellipsis overflow-hidden whitespace-nowrap'>Actions</th>
+					<th className='p-1.5 text-start border-b-slate-300 border-b text-ellipsis overflow-hidden whitespace-nowrap'>
+						ID
+					</th>
+					<th className='p-1.5 text-start border-b-slate-300 border-b text-ellipsis overflow-hidden whitespace-nowrap'>
+						First name
+					</th>
+					<th className='p-1.5 text-start border-b-slate-300 border-b text-ellipsis overflow-hidden whitespace-nowrap'>
+						Last name
+					</th>
+					<th className='p-1.5 text-start border-b-slate-300 border-b text-ellipsis overflow-hidden whitespace-nowrap'>
+						Registration
+					</th>
+					<th className='p-1.5 text-center border-b-slate-300 border-b text-ellipsis overflow-hidden whitespace-nowrap'>
+						Actions
+					</th>
 				</tr>
 			</thead>
 			<tbody>

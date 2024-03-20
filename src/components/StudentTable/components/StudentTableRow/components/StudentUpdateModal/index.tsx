@@ -35,15 +35,12 @@ export default function StudentUpdateModal({
 			open={isModalOpen}
 			className='open:fixed not-open:hidden self-center justify-self-center inset-0 flex flex-col items-center justify-center gap-4 p-6 rounded bg-slate-900 text-slate-300 backdrop-blur-xl backdrop:bg-black' //TODO: Backdrop not working
 		>
-			<h3
-				className='text-xl font-semibold self-start'
+			<h3 className='text-xl font-semibold self-start'>Update student</h3>
+			<form
+				onSubmit={handleSubmit(handleUpdate)}
+				className='flex flex-col gap-4'
 			>
-				Update student
-			</h3>
-			<form onSubmit={handleSubmit(handleUpdate)} className='flex flex-col gap-4'>
-				<div
-					className='flex gap-4 w-full'
-				>
+				<div className='flex gap-4 w-full'>
 					<div className='flex flex-col'>
 						<label htmlFor='firstName'>First name</label>
 						<input
@@ -64,10 +61,8 @@ export default function StudentUpdateModal({
 							required
 						/>
 					</div>
-					</div>
-				<div
-					className='flex flex-row justify-end w-full gap-2'
-				>
+				</div>
+				<div className='flex flex-row justify-end w-full gap-2'>
 					<button
 						type='submit'
 						className='px-2 py-1 text-sm font-semibold bg-slate-300 rounded-md text-slate-950 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-slate-500'

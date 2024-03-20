@@ -1,7 +1,5 @@
 import { memo, useState, useContext } from 'react';
-import {
-	Student,
-} from '../../../../interfaces';
+import { Student } from '../../../../interfaces';
 import StudentUpdateModal from './components/StudentUpdateModal';
 import { kill } from '../../../../api/api';
 import { StudentContext } from '../../../../context/StudentContext';
@@ -27,10 +25,18 @@ export default memo(function TableRow({ student }: TableRowProps) {
 
 	return (
 		<tr>
-			<td className='p-1.5 border-b-slate-300 border-b not-hover:max-w-28 text-ellipsis overflow-hidden whitespace-nowrap'>{student.id}</td>
-			<td className='p-1.5 border-b-slate-300 border-b max-w-28 text-ellipsis overflow-hidden whitespace-nowrap'>{student.firstName}</td>
-			<td className='p-1.5 border-b-slate-300 border-b max-w-28 text-ellipsis overflow-hidden whitespace-nowrap'>{student.lastName}</td>
-			<td className='p-1.5 border-b-slate-300 border-b max-w-28 text-ellipsis overflow-hidden whitespace-nowrap'>{student.registration}</td>
+			<td className='p-1.5 border-b-slate-300 border-b not-hover:max-w-28 text-ellipsis overflow-hidden whitespace-nowrap'>
+				{student.id}
+			</td>
+			<td className='p-1.5 border-b-slate-300 border-b max-w-28 text-ellipsis overflow-hidden whitespace-nowrap'>
+				{student.firstName}
+			</td>
+			<td className='p-1.5 border-b-slate-300 border-b max-w-28 text-ellipsis overflow-hidden whitespace-nowrap'>
+				{student.lastName}
+			</td>
+			<td className='p-1.5 border-b-slate-300 border-b max-w-28 text-ellipsis overflow-hidden whitespace-nowrap'>
+				{student.registration}
+			</td>
 			<td className='p-1.5 border-b-slate-300 border-b'>
 				<div className='flex justify-center items-center gap-2'>
 					<button
