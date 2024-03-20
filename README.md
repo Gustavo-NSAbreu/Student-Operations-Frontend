@@ -1,30 +1,80 @@
-# React + TypeScript + Vite
+# Run this application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Required software
 
-Currently, two official plugins are available:
+**You must have Docker and Docker Compose installed.**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Required configuration
 
-## Expanding the ESLint configuration
+Before running the project, you must create a `docker-compose.yaml` in the folder where both the repositories that this project depends on are, like this:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```
+student-operations
+|
+|- docker-compose.yaml
+|
+|- studente_operations_backend
+|
+|- student-operations-frontend
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+The content of the docker compose must be:
+
+```yaml
+services:
+  postgres:
+    image: 'postgres'
+    container_name: 'postgres'
+    restart: always
+    shm_size: 128mb
+    volumes:
+      - ./postgres/data:/var/lib/postgres/data
+    environment:
+      - 'POSTGRES_DB=student_operations'
+      - 'POSTGRES_PASSWORD=1234'
+    ports:
+      - 5432:5432
+    networks:
+      - student-operations-network
+
+  operations-backend:
+    image: student-operations-backend
+    container_name: student-operations-backend
+    build: ./student_operations_backend
+    ports:
+      - "8000:8000"
+    networks:
+      - student-operations-network
+
+  operations-frontend:
+    image: student=operations-frontend
+    container_name: student-operations-frontend
+    build: ./student-operations-frontend
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
+    networks:
+      - student-operations-network
+
+networks:
+  student-operations-network:
+    driver: bridge
+
+```
+
+## Running
+
+After setting up the file and repositories, run:
+
+`docker compose up`
+
+## Access the database
+
+Run:
+
+`docker exec -it postgres psql -h localhost -p 5432 -d student_operations -U postgres`
+
+## Access the interface
+
+Go to: `localhost:3000`

@@ -1,40 +1,46 @@
-import { useContext } from 'react';
-import { StudentContext } from '../../../../context/StudentContext';
-import { create } from '../../../../api/api';
-import { StudentFormSchema } from '../../../../interfaces';
 import { useForm } from 'react-hook-form';
+import { update } from '../../../../../../api/api';
+import { StudentFormSchema } from '../../../../../../interfaces';
+import { useContext } from 'react';
+import { StudentContext } from '../../../../../../context/StudentContext';
 
-export interface StudentCreationModalProps {
+interface StudentUpdateModalProps {
+	id: string;
+	registration: number;
 	isModalOpen: boolean;
-	toggleCreationModal: () => void;
+	toggleUpdateModal: () => void;
 }
 
-export default function StudentCreationModal({
+export default function StudentUpdateModal({
+	id,
+	registration,
 	isModalOpen,
-	toggleCreationModal,
-}: StudentCreationModalProps) {
+	toggleUpdateModal,
+}: StudentUpdateModalProps) {
 	const { register, handleSubmit, reset } = useForm<StudentFormSchema>();
 
-	const { addStudent } = useContext(StudentContext);
+	const { updateStudent } = useContext(StudentContext);
 
-	async function handleCreate(data: StudentFormSchema) {
-		const newStudent = await create(data);
-		toggleCreationModal();
-		addStudent(newStudent);
+	async function handleUpdate(data: StudentFormSchema) {
+		const student = { ...data, id, registration };
+
+		const updatedStudent = await update(student);
+		toggleUpdateModal();
+		updateStudent(updatedStudent);
 		reset();
 	}
 
 	return (
 		<dialog
 			open={isModalOpen}
-			className='open:fixed not-open:hidden self-center justify-self-center inset-0 flex flex-col items-center justify-center gap-4 p-6 rounded bg-slate-900 text-slate-300 backdrop-opacity-80 backdrop:bg-black'
+			className='open:fixed not-open:hidden self-center justify-self-center inset-0 flex flex-col items-center justify-center gap-4 p-6 rounded bg-slate-900 text-slate-300 backdrop-blur-xl backdrop:bg-black' //TODO: Backdrop not working
 		>
 			<h3
 				className='text-xl font-semibold self-start'
 			>
-				Add new student
+				Update student
 			</h3>
-			<form onSubmit={handleSubmit(handleCreate)} className='flex flex-col gap-4'>
+			<form onSubmit={handleSubmit(handleUpdate)} className='flex flex-col gap-4'>
 				<div
 					className='flex gap-4 w-full'
 				>
@@ -71,7 +77,7 @@ export default function StudentCreationModal({
 					<button
 						className='px-2 py-1 text-sm font-semibold bg-slate-800 rounded-md text-slate-300 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-slate-500'
 						type='button'
-						onClick={toggleCreationModal}
+						onClick={toggleUpdateModal}
 					>
 						Close
 					</button>
