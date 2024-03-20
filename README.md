@@ -37,7 +37,7 @@ services:
     networks:
       - student-operations-network
 
-  operations-backend:
+  student-operations-backend:
     image: student-operations-backend
     container_name: student-operations-backend
     build: ./student_operations_backend
@@ -46,8 +46,8 @@ services:
     networks:
       - student-operations-network
 
-  operations-frontend:
-    image: student=operations-frontend
+  student-operations-frontend:
+    image: student-operations-frontend
     container_name: student-operations-frontend
     build: ./student-operations-frontend
     ports:
