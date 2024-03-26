@@ -28,7 +28,7 @@ services:
     restart: always
     shm_size: 128mb
     volumes:
-      - ./postgres/data:/var/lib/postgres/data
+      - postgres:/var/lib/postgresql
     environment:
       - 'POSTGRES_DB=student_operations'
       - 'POSTGRES_PASSWORD=1234'
@@ -61,6 +61,8 @@ networks:
   student-operations-network:
     driver: bridge
 
+volumes:
+  postgres:
 ```
 
 ## Running
